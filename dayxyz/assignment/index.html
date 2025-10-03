@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+    }
+    .card, .form {
+      border: 2px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      width: 40%;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+    .card {
+      text-align: center;
+    }
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    ul {
+      list-style-type: square;
+      text-align: left;
+    }
+    .form label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    .form input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="resumeCard">
+    <img src="https://via.placeholder.com/100" id="profilePic" alt="Your Image">
+    <h1 id="displayName">XYZ</h1>
+    <p id="displayClass">Ph.D</p>
+    <h3>Programming Skills</h3>
+    <ul id="displaySkills">
+    <li>EXAMPLE</li>
+      <li>C</li>
+      <li>.Net</li>
+      <li>Script</li>
+    </ul>
+  </div>
+
+ 
+  <div class="form">
+    <h2>Card Detail</h2>
+    <label>Your Name</label>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+
+    <label>Class</label>
+    <input type="text" id="classInput" placeholder="Enter your class">
+
+    <label>Programming Skills (comma separated)</label>
+    <input type="text" id="skillInput" placeholder="e.g. C, .Net, Script">
+
+    <label>Profile Image URL</label>
+    <input type="text" id="imageInput" placeholder="Paste image link">
+
+    <button onclick="updateCard()">Submit</button>
+  </div>
+
+  <script>
+    function updateCard() {
+      // Get input values
+      const name = document.getElementById('nameInput').value;
+      const cls = document.getElementById('classInput').value;
+      const skills = document.getElementById('skillInput').value.split(',');
+      const imageUrl = document.getElementById('imageInput').value;
+
+      // Update card
+      document.getElementById('displayName').innerText = name || "XYZ";
+      document.getElementById('displayClass').innerText = cls || "Ph.D";
+      document.getElementById('profilePic').src = imageUrl || "https://via.placeholder.com/100";
+
+      // Update skill list
+      const skillList = document.getElementById('displaySkills');
+      skillList.innerHTML = "";
+      skills.forEach(skill => {
+        if(skill.trim() !== ""){
+          let li = document.createElement("li");
+          li.textContent = skill.trim();
+          skillList.appendChild(li);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

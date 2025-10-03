@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="students_style.css"?>
+<!-- 
+    Student Records Database
+    Last Updated: 2023-10-27
+-->
+<university name="Tech University" location="Cambridge, MA">
+    
+    <academic_term season="Fall" year="2023"/>
+    
+    <students>
+        
+        <student id="1001" status="full-time" enrollment-date="2022-08-15">
+            <personal_info>
+                <name>
+                    <first>Alice</first>
+                    <last>Johnson</last>
+                </name>
+                <demographics>
+                    <age>20</age>
+                    <gender>Female</gender>
+                </demographics>
+                <contact>
+                    <email>alice.johnson@university.edu</email>
+                    <phone>+1 (555) 123-4567</phone>
+                </contact>
+            </personal_info>
+            
+            <academic_info>
+                <major department="CS">Computer Science</major>
+                <minor department="MATH">Mathematics</minor>
+                <classification>Junior</classification>
+                <gpa scale="4.0">3.8</gpa>
+                <credits_earned>75</credits_earned>
+            </academic_info>
+            
+            <courses>
+                <course code="CS301" name="Algorithms" credits="3"/>
+                <course code="CS305" name="Database Systems" credits="4"/>
+                <course code="MATH202" name="Linear Algebra" credits="3"/>
+            </courses>
+        </student>
+        
+        <student id="1002" status="full-time" enrollment-date="2021-01-10">
+            <personal_info>
+                <name>
+                    <first>Michael</first>
+                    <last>Chen</last>
+                </name>
+                <demographics>
+                    <age>22</age>
+                    <gender>Male</gender>
+                </demographics>
+                <contact>
+                    <email>michael.chen@university.edu</email>
+                    <phone>+1 (555) 987-6543</phone>
+                </contact>
+            </personal_info>
+            
+            <academic_info>
+                <major department="MATH">Mathematics</major>
+                <classification>Senior</classification>
+                <gpa scale="4.0">3.9</gpa>
+                <credits_earned>110</credits_earned>
+            </academic_info>
+            
+            <courses>
+                <course code="MATH410" name="Advanced Calculus" credits="4"/>
+                <course code="PHYS301" name="Quantum Mechanics" credits="3"/>
+                <course code="CS201" name="Programming Fundamentals" credits="3"/>
+            </courses>
+        </student>
+        
+        <student id="1003" status="part-time" enrollment-date="2023-01-15">
+            <personal_info>
+                <name>
+                    <first>Sarah</first>
+                    <last>Williams</last>
+                </name>
+                <demographics>
+                    <age>21</age>
+                    <gender>Female</gender>
+                </demographics>
+                <contact>
+                    <email>sarah.williams@university.edu</email>
+                    <phone>+1 (555) 456-7890</phone>
+                </contact>
+            </personal_info>
+            
+            <academic_info>
+                <major department="BIO">Biology</major>
+                <classification>Sophomore</classification>
+                <gpa scale="4.0">3.6</gpa>
+                <credits_earned>45</credits_earned>
+            </academic_info>
+            
+            <courses>
+                <course code="BIO201" name="Cell Biology" credits="4"/>
+                <course code="CHEM101" name="General Chemistry" credits="3"/>
+                <course code="ENG102" name="Composition II" credits="3"/>
+            </courses>
+        </student>
+        
+    </students>
+    
+    <departments>
+        <department id="CS" name="Computer Science"/>
+        <department id="MATH" name="Mathematics"/>
+        <department id="BIO" name="Biology"/>
+        <department id="PHYS" name="Physics"/>
+        <department id="ENG" name="English"/>
+    </departments>
+    
+</university>

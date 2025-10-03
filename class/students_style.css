@@ -1,0 +1,137 @@
+
+university {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 15px;
+    color: #333;
+}
+
+academic_term {
+    display: block;
+    background: #fff;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    font-weight: bold;
+    color: #667eea;
+}
+
+students {
+    display: block;
+}
+
+student {
+    display: block;
+    background: white;
+    margin: 20px 0;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    border-left: 5px solid #667eea;
+    transition: transform 0.2s ease;
+}
+
+student:hover {
+    transform: translateY(-2px);
+}
+
+student[status="full-time"] {
+    border-left-color: #28a745;
+}
+
+student[status="part-time"] {
+    border-left-color: #ffc107;
+}
+
+personal_info, academic_info, courses {
+    display: block;
+    margin: 15px 0;
+}
+
+name {
+    display: block;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+first, last {
+    display: inline;
+}
+
+first::after {
+    content: " ";
+}
+
+demographics, contact {
+    display: block;
+    margin: 8px 0;
+    color: #666;
+}
+
+age, gender, email, phone {
+    display: inline-block;
+    margin-right: 15px;
+    padding: 4px 8px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+major, minor, classification, gpa, credits_earned {
+    display: block;
+    margin: 5px 0;
+    padding: 8px;
+    background: #e3f2fd;
+    border-radius: 6px;
+}
+
+major {
+    font-weight: bold;
+    color: #1976d2;
+    background: #bbdefb;
+}
+
+courses {
+    display: block;
+}
+
+course {
+    display: inline-block;
+    background: #e8f5e8;
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: #388e3c;
+    border: 1px solid #c8e6c9;
+}
+
+departments {
+    display: block;
+    margin-top: 30px;
+}
+
+department {
+    display: inline-block;
+    background: #fff3cd;
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+student:before {
+    content: "Student ID: " attr(id);
+    display: block;
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
