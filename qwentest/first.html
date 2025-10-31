@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriPlan AI - Personalized Meal Planning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            background: white;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .ai-agent-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .input-section {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .output-section {
+            flex: 2;
+            min-width: 500px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f9f9f9;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        .btn.generate {
+            background: #27ae60;
+        }
+        
+        .btn.generate:hover {
+            background: #219653;
+        }
+        
+        .meal-plan {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .day-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .day-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .meal {
+            font-size: 0.85rem;
+            margin: 5px 0;
+            padding: 5px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .meal.breakfast { background: #e3f2fd; }
+        .meal.lunch { background: #e8f5e9; }
+        .meal.dinner { background: #fff3e0; }
+        .meal.snack { background: #f3e5f5; }
+        
+        .health-condition {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .health-condition i {
+            color: #e74c3c;
+        }
+        
+        .dietary-preference {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .dietary-preference i {
+            color: #27ae60;
+        }
+        
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .ai-status i {
+            color: #3498db;
+            font-size: 1.5rem;
+        }
+        
+        .month-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .month-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .feature h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .ai-agent-container {
+                flex-direction: column;
+            }
+            
+            .output-section {
+                min-width: 100%;
+            }
+            
+            .meal-plan {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>NutriPlan AI</h1>
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h1>AI-Powered Meal Planning Assistant</h1>
+            <p>Plan your entire month's meals based on your health conditions and dietary preferences</p>
+        </header>
+        
+        <div class="ai-agent-container">
+            <div class="input-section">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> Your Health Profile</h2>
+                
+                <div class="form-group">
+                    <label for="age"><i class="fas fa-user"></i> Age</label>
+                    <input type="number" id="age" placeholder="Enter your age" value="35">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                    <select id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-condition"><i class="fas fa-heartbeat"></i> Health Condition</label>
+                    <select id="health-condition">
+                        <option value="diabetes">Diabetes</option>
+                        <option value="hypertension">Hypertension</option>
+                        <option value="heart-disease">Heart Disease</option>
+                        <option value="cholesterol">High Cholesterol</option>
+                        <option value="gluten">Celiac Disease/Gluten Intolerance</option>
+                        <option value="lactose">Lactose Intolerance</option>
+                        <option value="none" selected>None</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dietary-preference"><i class="fas fa-seedling"></i> Dietary Preference</label>
+                    <select id="dietary-preference">
+                        <option value="omnivore">Omnivore</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="keto">Keto</option>
+                        <option value="mediterranean">Mediterranean</option>
+                        <option value="paleo">Paleo</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="allergies"><i class="fas fa-allergies"></i> Food Allergies (Optional)</label>
+                    <input type="text" id="allergies" placeholder="e.g., nuts, shellfish, soy">
+                </div>
+                
+                <div class="form-group">
+                    <label for="calories"><i class="fas fa-fire"></i> Daily Calorie Goal</label>
+                    <input type="number" id="calories" placeholder="Enter calorie target" value="2000">
+                </div>
+                
+                <button class="btn generate" id="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Monthly Meal Plan
+                </button>
+                
+                <div class="ai-status">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <strong>AI Agent Status:</strong> Analyzing your health profile...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Your Monthly Meal Plan</h2>
+                
+                <div class="month-navigation">
+                    <button class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="month-title">October 2023</div>
+                    <button class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="meal-plan" id="meal-plan">
+                    <!-- Day cards will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-heartbeat"></i>
+                <h3>Health-First Approach</h3>
+                <p>Our AI considers your specific health conditions to create safe, beneficial meals.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-balance-scale"></i>
+                <h3>Balanced Nutrition</h3>
+                <p>Every meal is nutritionally balanced to meet your dietary requirements.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-clock"></i>
+                <h3>Time Saving</h3>
+                <p>Get a complete monthly plan in seconds, saving hours of meal planning time.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 NutriPlan AI - Your Personalized Nutrition Assistant | This is a demonstration interface</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generate-btn');
+            const mealPlanContainer = document.getElementById('meal-plan');
+            
+            // Sample meal data based on health conditions
+            const mealData = {
+                diabetes: {
+                    breakfast: ["Oatmeal with berries", "Greek yogurt with nuts", "Vegetable omelet", "Avocado toast"],
+                    lunch: ["Quinoa salad", "Lentil soup", "Grilled chicken salad", "Tofu stir-fry"],
+                    dinner: ["Baked salmon", "Zucchini noodles", "Chickpea curry", "Grilled tofu"],
+                    snack: ["Apple with almond butter", "Carrots with hummus", "Nuts", "Cottage cheese"]
+                },
+                hypertension: {
+                    breakfast: ["Oatmeal with banana", "Greek yogurt", "Egg whites", "Smoothie"],
+                    lunch: ["Kale salad", "Lentil soup", "Grilled fish", "Quinoa bowl"],
+                    dinner: ["Baked chicken", "Steamed vegetables", "Brown rice", "Fish curry"],
+                    snack: ["Berries", "Unsalted nuts", "Low-fat cheese", "Veggie sticks"]
+                },
+                cholesterol: {
+                    breakfast: ["Oatmeal", "Egg whites", "Smoothie", "Whole grain toast"],
+                    lunch: ["Salmon salad", "Lentil soup", "Grilled chicken", "Tofu bowl"],
+                    dinner: ["Baked fish", "Vegetable stir-fry", "Quinoa", "Lean beef"],
+                    snack: ["Nuts", "Fruits", "Yogurt", "Vegetables"]
+                },
+                none: {
+                    breakfast: ["Oatmeal", "Eggs", "Yogurt", "Toast"],
+                    lunch: ["Chicken salad", "Soup", "Pasta", "Rice bowl"],
+                    dinner: ["Steak", "Pasta", "Rice", "Fish"],
+                    snack: ["Fruits", "Nuts", "Yogurt", "Veggies"]
+                }
+            };
+            
+            // Generate initial meal plan
+            generateMealPlan();
+            
+            // Generate meal plan when button is clicked
+            generateBtn.addEventListener('click', generateMealPlan);
+            
+            function generateMealPlan() {
+                const healthCondition = document.getElementById('health-condition').value;
+                const dietaryPreference = document.getElementById('dietary-preference').value;
+                
+                // Show processing state
+                mealPlanContainer.innerHTML = '<div class="day-card"><div class="day-header">Processing...</div><div class="meal">AI is analyzing your profile</div></div>';
+                
+                // Simulate processing time
+                setTimeout(() => {
+                    // Clear container
+                    mealPlanContainer.innerHTML = '';
+                    
+                    // Get meals for the selected condition
+                    const meals = mealData[healthCondition] || mealData.none;
+                    
+                    // Generate 31 days of meals
+                    for (let day = 1; day <= 31; day++) {
+                        const dayCard = document.createElement('div');
+                        dayCard.className = 'day-card';
+                        
+                        // Randomly select meals for each day
+                        const breakfast = meals.breakfast[Math.floor(Math.random() * meals.breakfast.length)];
+                        const lunch = meals.lunch[Math.floor(Math.random() * meals.lunch.length)];
+                        const dinner = meals.dinner[Math.floor(Math.random() * meals.dinner.length)];
+                        const snack = meals.snack[Math.floor(Math.random() * meals.snack.length)];
+                        
+                        dayCard.innerHTML = `
+                            <div class="day-header">Day ${day}</div>
+                            <div class="meal breakfast"><i class="fas fa-coffee"></i> Breakfast: ${breakfast}</div>
+                            <div class="meal lunch"><i class="fas fa-utensils"></i> Lunch: ${lunch}</div>
+                            <div class="meal dinner"><i class="fas fa-utensils"></i> Dinner: ${dinner}</div>
+                            <div class="meal snack"><i class="fas fa-apple-alt"></i> Snack: ${snack}</div>
+                        `;
+                        
+                        mealPlanContainer.appendChild(dayCard);
+                    }
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
