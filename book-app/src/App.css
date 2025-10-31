@@ -1,0 +1,88 @@
+/* Main container */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color, #1a1a1a);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Content area */
+.main-content {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 6rem 2rem 2rem;
+  flex: 1;
+}
+
+/* Book grid layout */
+.books-grid {
+  display: grid;
+  /* exactly three columns on wide screens */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+  justify-content: center;
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 1160px; /* keeps three cards comfortably centered */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section headers */
+.section-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  background: linear-gradient(45deg, #646cff, #9089fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-header p {
+  color: var(--text-secondary, #9aa2ac);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 5rem 1.5rem 2rem;
+  }
+
+  .books-grid {
+    /* two columns on medium screens */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 4.5rem 1rem 1.5rem;
+  }
+
+  .books-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .section-header h1 {
+    font-size: 2rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+  }
+}
